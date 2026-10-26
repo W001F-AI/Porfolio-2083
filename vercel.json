@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "name": "portfolio-mohamed-issa",
+  "cleanUrls": true,
+  "headers": [
+    {
+      "source": "/images/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ]
+}

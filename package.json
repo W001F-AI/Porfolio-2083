@@ -1,0 +1,13 @@
+{
+  "name": "portfolio-2083",
+  "version": "1.0.0",
+  "description": "Mohamed Ahmed Issa - AI & Digital Innovation Portfolio",
+  "main": "serve.js",
+  "scripts": {
+    "start": "node serve.js",
+    "dev": "node serve.js"
+  },
+  "keywords": ["portfolio", "digital-solutions", "retail-operations", "ai"],
+  "author": "Mohamed Ahmed Issa",
+  "license": "ISC"
+}
