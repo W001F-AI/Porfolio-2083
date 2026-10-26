@@ -4,6 +4,7 @@ node_modules/
 # Local Dev & Inspector artifacts
 .scratch/
 .taste-inspect/
+.taste-skill/
 taste-skill-main/
 Porfolio-2083-main/
 

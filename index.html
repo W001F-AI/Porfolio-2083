@@ -1105,13 +1105,13 @@
     const footerEl = document.getElementById('footerCopyright');
     if (footerEl) footerEl.textContent = `© ${currentYear} Mohamed Ahmed Issa`;
 
-    // 1. HERO SPOTLIGHT REVEAL
+    // 1. HERO SPOTLIGHT & TOUCH REVEAL
     (function initHeroSpotlight() {
       const section = document.getElementById("home");
       const layer = document.getElementById("characterReveal");
       if (!section || !layer) return;
-      if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
 
+      const isFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
       let frame = 0, x = 0, y = 0, tx = 0, ty = 0, active = false;
 
@@ -1129,20 +1129,24 @@
 
       function onMove(event) {
         const box = section.getBoundingClientRect();
-        tx = event.clientX - box.left;
-        ty = event.clientY - box.top;
+        const clientX = event.clientX !== undefined ? event.clientX : (event.touches && event.touches[0] ? event.touches[0].clientX : 0);
+        const clientY = event.clientY !== undefined ? event.clientY : (event.touches && event.touches[0] ? event.touches[0].clientY : 0);
+        tx = clientX - box.left;
+        ty = clientY - box.top;
         if (!active) {
           x = tx;
           y = ty;
           active = true;
-          layer.style.opacity = "1";
+          layer.classList.add("touch-active");
+          if (isFinePointer) layer.style.opacity = "1";
         }
         if (!frame) frame = requestAnimationFrame(draw);
       }
 
       function onLeave() {
         active = false;
-        layer.style.opacity = "0";
+        layer.classList.remove("touch-active");
+        if (isFinePointer) layer.style.opacity = "0";
         if (frame) {
           cancelAnimationFrame(frame);
           frame = 0;
@@ -1151,6 +1155,9 @@
 
       section.addEventListener("pointermove", onMove);
       section.addEventListener("pointerleave", onLeave);
+      section.addEventListener("touchstart", onMove, { passive: true });
+      section.addEventListener("touchmove", onMove, { passive: true });
+      section.addEventListener("touchend", onLeave, { passive: true });
       window.addEventListener("blur", onLeave);
     })();
 
